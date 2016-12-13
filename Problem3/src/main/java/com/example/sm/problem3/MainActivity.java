@@ -27,12 +27,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        for(CustomerThread ct : list){
-
-            try {
-                // need something here
-            } catch (InterruptedException e) { }
-        }
+//        for(CustomerThread ct : list){
+//
+//            try {
+//                // need something here
+//            } catch (InterruptedException e) { }
+//        }
 
         manager.sort();
 
@@ -51,7 +51,19 @@ class CustomerThread extends Thread{
     CustomerThread(Customer customer){
         this.customer = customer;
     }
-    // need something here
+
+    @Override
+    public void run() {
+        for(int i=0; i<10; i++){
+            customer.work();
+            try {
+                Thread.sleep((int)(Math.random()*1000));
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
 }
 
 abstract class Person{
@@ -70,7 +82,15 @@ class Customer extends Person{
         this.name = name;
     }
 
-    // need something here
+    @Override
+    void work() {
+        spent_money = (int) (Math.random() * 1000);
+        money -= spent_money;
+    }
+    int getMoney(){
+        return money;
+    }
+
 }
 
 
@@ -89,9 +109,7 @@ class Manager extends Person{
 
     @Override
     void work() {
-        sort();
+        spent_money = (int) (Math.random() * 1000);
+        money -= spent_money;
     }
 }
-
-// need something here
-

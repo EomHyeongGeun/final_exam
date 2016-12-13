@@ -43,9 +43,31 @@ public class MyBaseAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        // need something here
+        final int pos = position;
+        final Context context = parent.getContext();
 
-        return itemLayout;
+        // "listview_item" Layout을 inflate하여 convertView 참조 획득.
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.list_view_item_layout, parent, false);
+        }
+        TextView nameText    = (TextView)convertView.findViewById(R.id.text_name);
+        TextView moneyText = (TextView)convertView.findViewById(R.id.text_money);
+
+
+        Customer listViewItem = mData.get(position);
+
+        nameText.setText(listViewItem.name);
+        moneyText.setText(listViewItem.getMoney()+"");
+
+        return convertView;
 
     }
 }
+
+
+
+
+
+
+

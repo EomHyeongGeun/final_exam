@@ -7,14 +7,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 public class MyBaseAdapter extends BaseAdapter implements AdapterView.OnItemClickListener{
 
     Context mContext = null;
     ArrayList<Employee> mData = null;
     LayoutInflater mLayoutInflater = null;
+
+
     public int selected_position;
 
     MyBaseAdapter(  Context context, ArrayList<Employee> data){
@@ -66,6 +70,25 @@ public class MyBaseAdapter extends BaseAdapter implements AdapterView.OnItemClic
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // need something here
+        final int pos = position;
+        final Context context = parent.getContext();
+
+        // "listview_item" Layout을 inflate하여 convertView 참조 획득.
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.list_view_item_layout, parent, false);
+        }
+
+        TextView nameText    = (TextView)convertView.findViewById(R.id.text_employeeName);
+        TextView ageText = (TextView)convertView.findViewById(R.id.text_employeeAge);
+        TextView salaryText = (TextView)convertView.findViewById(R.id.text_employeeSalary);
+
+        Employee listViewItem = mData.get(position);
+
+        nameText.setText(listViewItem.getName());
+        ageText.setText(listViewItem.getAge()+"");
+        salaryText.setText(listViewItem.getSalary()+"");
+
+        return convertView;
     }
 }
